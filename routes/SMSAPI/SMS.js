@@ -1,0 +1,33 @@
+const digest = require("../../Helpers/CalculateDigest");
+const express = require("express");
+const router = express.Router();
+const axios = require("axios");
+
+//SendFreeMTMessage
+router.post("/", (req, res) => {
+  if (!req.body.messageBody || !req.body.MSISDN || !req.body.operatorCode) {
+    return res.status(400).json({ error: "one of the parameters is missing" });
+  }
+  var body = {
+    messageBody: req.body.messageBody,
+    msisdn: req.body.MSISDN,
+    operatorCode: req.body.operatorCode
+  };
+  var signature = digest.CalculateDigest(
+    body,
+    process.env.TPAY_API_PUBLICKEY,
+    process.env.TPAY_API_PRIVATEKEY
+  );
+  body = { signature, ...body };
+  console.log(body);
+  axios
+    .post(`${process.env.TPAY_API_URI}/TPAY.svc/Json/SendFreeMTMessage`, body)
+    .then(response => {
+      res.send(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+module.exports = router;

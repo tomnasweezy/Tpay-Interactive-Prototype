@@ -1,0 +1,19 @@
+{
+  "disclaimer": "Vous vous abonnez au service s'il vous plaît assurez-vous que vous êtes au courant de cela",
+  "mobileNumberInput": "veuillez entrer le numéro de téléphone",
+  "mobileOperatorInput": "Sélectionner un opérateur",
+  "subscribeButton": "Souscrire",
+  "stepperHeader1": "Souscrire",
+  "stepperHeader2": "Vérifier",
+  "stepperHeader3": "Résultat de l'abonnement",
+  "exitBtn": "Sortie",
+  "resendBtn": "Renvoyer le code pin",
+  "pinCodeInput": "Entrer le code PIN",
+  "upDisc": "Gratuit pendant 24 heures, prix / fréquence, TVA incluse",
+  "termsTitle": "Termes et conditions",
+  "terms1": "En cliquant sur le bouton d'inscription ci-dessus, vous acceptez les conditions ci-dessous.",
+  "terms2": "Vous commencerez automatiquement l'abonnement payant après la période de gratuité",
+  "terms3": "Aucun engagement, vous pouvez annuler votre abonnement à tout moment en envoyant XXXX à YYYY",
+  "terms4": "Pour obtenir de l'aide, veuillez contacter abc@abc.com ou + 971-XXXXXXXXX",
+  "terms5": "L'essai gratuit n'est valable que pour les nouveaux abonnés"
+}
