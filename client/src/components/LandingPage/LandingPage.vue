@@ -4,15 +4,19 @@
       <v-col cols="10">
         <v-stepper v-model="e1">
           <v-stepper-header>
-            <v-stepper-step :complete="e1 > 1" step="1">{{
+            <v-stepper-step :complete="e1 > 1" step="1">
+              {{
               $t("stepperHeader1")
-            }}</v-stepper-step>
+              }}
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="e1 > 2" step="2">{{
+            <v-stepper-step :complete="e1 > 2" step="2">
+              {{
               $t("stepperHeader2")
-            }}</v-stepper-step>
+              }}
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -32,15 +36,31 @@
                 <v-card-text>
                   <v-row align="center" justify="center">
                     <v-col cols="12" md="6">
-                      <v-alert :type="alert1.type" v-if="alert1">{{
+                      <v-alert :type="alert1.type" v-if="alert1">
+                        {{
                         alert1.message
-                      }}</v-alert>
+                        }}
+                      </v-alert>
+                      <!-- -----Mobile number upper part---------              -->
                       <p
-                        v-if="operatorDetails.isUpDisc"
+                        v-if="operatorDetails.isUpDisc &&
+                        this.$store.state.selectedCountry === 'UAE' "
                         class="text-center black--text"
                       >
-                        {{ $t("upDisc") }}
+                        {{ this.$store.state.selectedLanguage === 'EN' ?
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        :
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        }}
+                        {{this.operatorDetails.isVat ? $t("VatInclusive") : $t("VatExcluded") }}
                       </p>
+
                       <v-select
                         class="my-2"
                         :items="country.operator"
@@ -51,6 +71,7 @@
                       ></v-select>
                       <v-text-field
                         :label="$t('mobileNumberInput')"
+                        :placeholder="$t(this.operatorDetails.placeholder)"
                         type="number"
                         class="inputPrice"
                         v-model="MSISDN"
@@ -66,8 +87,7 @@
                           large
                           class="mb-3"
                           @click="onMobileEnter"
-                          >{{ $t("UAEsubscribeButton") }}</v-btn
-                        >
+                        >{{ $t("UAEsubscribeButton") }}</v-btn>
                         <v-btn
                           v-else
                           id="v-step-0"
@@ -75,31 +95,82 @@
                           large
                           class="mb-3"
                           @click="onMobileEnter"
-                          >{{ $t("subscribeButton") }}</v-btn
-                        >
+                        >{{ $t("subscribeButton") }}</v-btn>
                       </v-row>
 
-                      <v-row
-                        align="center"
-                        justify="center"
-                        v-if="operatorDetails.isExit"
-                      >
+                      <v-row align="center" justify="center" v-if="operatorDetails.isExit">
                         <v-btn
                           id="v-step-1"
                           color="primary"
                           text
                           class="mb-3"
                           @click="e1 = 2"
-                          >{{ $t("exitBtn") }}</v-btn
-                        >
+                        >{{ $t("exitBtn") }}</v-btn>
                       </v-row>
-                      <p class="black--text">{{ disclaimer }}</p>
+
+                      <!-- --------Mobile Enter Area-------------- -->
+                      <!-- --------Mobile Enter lower part -------------- -->
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
+                        this.$store.state.selectedCountry === 'UAE' "
+                        class="text-center black--text"
+                      >
+                        {{ this.$store.state.selectedLanguage === 'EN' ?
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        :
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        }}
+                        {{this.operatorDetails.isVat ? $t("VatInclusive") : $t("VatExcluded") }}
+                      </p>
+
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
+                        this.$store.state.selectedCountry === 'QA' "
+                        class="text-center black--text"
+                      >
+                        {{$t("upDiscqar")}}
+                        <span class="bold">
+                          {{this.setupDetails.price}}
+                          {{this.currencyText}}
+                          {{this.$t(this.setupDetails.frequency)}}
+                        </span>
+                      </p>
+                      <!-- -------------mobile number disclaimer ----------- -->
+
+                      <p
+                        v-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'QA' &&
+                        this.operatorDetails.operatorCode === '42701'"
+                        class="black--text"
+                      >{{ QAdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity"
+                        class="black--text"
+                      >{{ disclaimer }}</p>
+
                       <div v-if="operatorDetails.isTerms" class="black--text">
                         <p>{{ $t("termsTitle") }}</p>
                         <ul>
                           <li>{{ $t("terms1") }}</li>
                           <li>{{ $t("terms2") }}</li>
-                          <li>{{ $t("terms3") }}</li>
+                          <li>
+                            {{ this.$store.state.selectedLanguage === "EN" ?
+                            $t("terms3") + " " +
+                            this.setupDetails.unsubKeyword + " " +
+                            this.$t("to") + " " +
+                            this.operatorDetails.shortcode
+                            :
+                            $t("terms3") + " " +
+                            this.setupDetails.unsubKeyword + " " +
+                            this.$t("to") + " " +
+                            this.operatorDetails.shortcode }}
+                          </li>
                           <li>{{ $t("terms4") }}</li>
                           <li>{{ $t("terms5") }}</li>
                         </ul>
@@ -121,9 +192,27 @@
                         dismissible
                         :type="alert2.type"
                         v-if="alert2"
-                        >{{ alert2.message }}</v-alert
+                      >{{ alert2.message }}</v-alert>
+
+                      <!-- --------Pincode page upper part----------          -->
+                      <p
+                        v-if="operatorDetails.isUpDisc &&
+                        this.$store.state.selectedCountry === 'UAE' "
+                        class="text-center black--text"
                       >
-                      <p v-if="operatorDetails.isUpDisc">{{ $t("upDisc") }}</p>
+                        {{ this.$store.state.selectedLanguage === 'EN' ?
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        :
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        }}
+                        {{this.operatorDetails.isVat ? $t("VatInclusive") : $t("VatExcluded") }}
+                      </p>
                       <v-text-field
                         v-model="PinCode"
                         type="number"
@@ -134,43 +223,114 @@
                       <v-tour name="pincodePage1" :steps="step3"></v-tour>
                       <v-row align="center" justify="center">
                         <v-btn
+                          id="v-step-3"
                           color="primary"
                           text
                           small
                           class="mb-3"
                           @click="onResend"
-                          >{{ $t("resendBtn") }}</v-btn
-                        >
+                        >{{ $t("resendBtn") }}</v-btn>
                       </v-row>
                       <v-row align="center" justify="center">
                         <v-btn
+                          v-if="this.$store.state.selectedCountry === 'UAE'"
+                          id="v-step-2"
                           color="primary"
                           large
                           class="mb-3"
                           @click="onVerify"
-                          >{{ $t("subscribeButton") }}</v-btn
-                        >
-                      </v-row>
-                      <v-row
-                        align="center"
-                        justify="center"
-                        v-if="operatorDetails.isExit"
-                      >
+                        >{{ $t("UAEPincodesubscribeButton") }}</v-btn>
                         <v-btn
+                          v-if="this.$store.state.selectedCountry === 'QA'"
+                          id="v-step-2"
+                          color="primary"
+                          large
+                          class="mb-3"
+                          @click="onVerify"
+                        >{{ $t("QAPincodesubscribeButton") }}</v-btn>
+                        <v-btn
+                          v-else
+                          id="v-step-2"
+                          color="primary"
+                          large
+                          class="mb-3"
+                          @click="onVerify"
+                        >{{ $t("subscribeButton") }}</v-btn>
+                      </v-row>
+                      <v-row align="center" justify="center" v-if="operatorDetails.isExit">
+                        <v-btn
+                          id="v-step-4"
                           color="primary"
                           text
                           class="mb-3"
                           @click="e1 = 2"
-                          >{{ $t("exitBtn") }}</v-btn
-                        >
+                        >{{ $t("exitBtn") }}</v-btn>
                       </v-row>
-                      <p class="black--text">{{ disclaimer }}</p>
-                      <div v-if="operatorDetails.isTerms">
+
+                      <!-- ------PINCODE AREA----------- -->
+                      <!-- ------PINCODE AREA lower part ----------- -->
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
+                        this.$store.state.selectedCountry === 'QA' "
+                        class="text-center black--text"
+                      >
+                        {{$t("upDiscqar")}}
+                        <span class="bold">
+                          {{this.setupDetails.price}}
+                          {{this.currencyText}}
+                          {{this.$t(this.setupDetails.frequency)}}
+                        </span>
+                      </p>
+
+                      <p
+                        v-if="operatorDetails.isUpDisc &&
+                        this.$store.state.selectedCountry === 'UAE' "
+                        class="text-center black--text"
+                      >
+                        {{ this.$store.state.selectedLanguage === 'EN' ?
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        :
+                        $t("upDisc") + " " +
+                        this.setupDetails.price + " " +
+                        this.currencyText + " " +
+                        this.$t(this.setupDetails.frequency)
+                        }}
+                        {{this.operatorDetails.isVat ? $t("VatInclusive") : $t("VatExcluded") }}
+                      </p>
+
+                      <!-- ------- Pin Code Disclaimer section------------- -->
+
+                      <p
+                        v-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'QA' &&
+                        this.operatorDetails.operatorCode === '42701'"
+                        class="black--text"
+                      >{{ QAdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity"
+                        class="black--text"
+                      >{{ disclaimer }}</p>
+
+                      <div v-if="operatorDetails.isTerms" class="black--text">
                         <p>{{ $t("termsTitle") }}</p>
                         <ul>
                           <li>{{ $t("terms1") }}</li>
                           <li>{{ $t("terms2") }}</li>
-                          <li>{{ $t("terms3") }}</li>
+                          <li>
+                            {{ this.$store.state.selectedLanguage === "EN" ?
+                            $t("terms3") + " " +
+                            this.setupDetails.unsubKeyword + " " +
+                            this.$t("to") + " " +
+                            this.operatorDetails.shortcode
+                            :
+                            $t("terms3") + " " +
+                            this.setupDetails.unsubKeyword + " " +
+                            this.$t("to") + " " +
+                            this.operatorDetails.shortcode }}
+                          </li>
                           <li>{{ $t("terms4") }}</li>
                           <li>{{ $t("terms5") }}</li>
                         </ul>
@@ -182,10 +342,10 @@
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <v-alert type="success"
-                >You have successfully subscribed successfully you should
-                recieve an SMS with the subscription detials</v-alert
-              >
+              <v-alert type="success">
+                You have successfully subscribed successfully you should
+                recieve an SMS with the subscription detials
+              </v-alert>
 
               <v-btn color="primary" @click="e1 = 1">Continue</v-btn>
 
@@ -206,7 +366,7 @@ import VueTour from "vue-tour";
 export default {
   name: "Home",
   components: {
-    "log-panel": LogPanel,
+    "log-panel": LogPanel
   },
   data() {
     return {
@@ -225,48 +385,74 @@ export default {
         {
           target: "#v-step-0", // We're using document.querySelector() under the hood
           header: {
-            title: "Add Subscription API",
+            title: "Add Subscription API"
           },
           content: `<strong> the Add Subscription API </strong>!`,
-          placement: "left",
-        },
+          placement: "left"
+        }
       ],
       step1: [
         {
           target: "#v-step-0", // We're using document.querySelector() under the hood
           header: {
-            title: "Add Subscription API",
+            title: "Add Subscription API"
           },
           content: `<strong> the Add Subscription API </strong>!`,
-          placement: "bottom",
+          placement: "bottom"
         },
         {
           target: "#v-step-1", // We're using document.querySelector() under the hood
           header: {
-            title: "Exit",
+            title: "Exit"
           },
           content: `the <strong>Exit button</strong>!`,
-          placement: "right",
-        },
+          placement: "right"
+        }
       ],
       step2: [
         {
           target: "#v-step-2", // We're using document.querySelector() under the hood
           header: {
-            title: "Verify API",
+            title: "Verify API"
           },
           content: `<strong> Verify API</strong>!`,
-          placement: "bottom",
+          placement: "bottom"
         },
         {
-          target: "#v-step-1", // We're using document.querySelector() under the hood
+          target: "#v-step-3", // We're using document.querySelector() under the hood
           header: {
-            title: "Exit",
+            title: "Resend button"
           },
-          content: `the <strong>Exit button</strong>!`,
-          placement: "right",
-        },
+          content: `the <strong>Resend API </strong>!`,
+          placement: "right"
+        }
       ],
+      step3: [
+        {
+          target: "#v-step-2", // We're using document.querySelector() under the hood
+          header: {
+            title: "Verify API"
+          },
+          content: `<strong> Verify API</strong>!`,
+          placement: "bottom"
+        },
+        {
+          target: "#v-step-3", // We're using document.querySelector() under the hood
+          header: {
+            title: "Resend button"
+          },
+          content: `the <strong>Resend API </strong>!`,
+          placement: "right"
+        },
+        {
+          target: "#v-step-4", // We're using document.querySelector() under the hood
+          header: {
+            title: "Exit button"
+          },
+          content: `the <strong>Exit  </strong>!`,
+          placement: "right"
+        }
+      ]
     };
   },
   created() {
@@ -335,80 +521,147 @@ export default {
     },
     country() {
       return this.$store.state.countries.find(
-        (x) => x.value == this.$store.state.selectedCountry
+        x => x.value == this.$store.state.selectedCountry
       );
-    },
-    selectedoperator() {
-      return this.$store.state.countries.find(
-        (x) => x.value == this.$store.state.selectedCountry
-      );
-    },
-    disclaimer() {
-      return `${this.$t("disclaimer1")} ${
-        this.setupDetails.serviceName
-      } ${this.$t("for")} ${this.setupDetails.price} ${
-        this.currencyText
-      } ${this.$t(this.setupDetails.frequency)} ${this.$t("for")} ${
-        this.operatorNames
-      } ${this.$t("disclaimer2")} ${this.setupDetails.unsubKeyword} ${this.$t(
-        "to"
-      )} ${this.opertorShortCodes}`;
     },
     operatorDetails() {
       return this.country.operator.find(
-        (x) => x.operatorCode == this.selectedOperator
+        x => x.operatorCode == this.selectedOperator
       );
     },
+
+    disclaimer() {
+      if (this.$store.state.selectedLanguage === "EN") {
+        return `${this.$t("disclaimer1")} 
+        ${this.setupDetails.serviceName} 
+        ${this.$t("for")} 
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+          ${this.$t("disclaimer2")} 
+         ${this.$t("for")} 
+         ${this.operatorDetails.text}
+          ${"subscribers please send"}
+          ${this.setupDetails.unsubKeyword} 
+          ${this.$t("to")}
+         ${this.operatorDetails.shortcode}
+          ${this.$t("disclaimer3")} 
+         `;
+      } else {
+        return `${this.$t("disclaimer1")} 
+        ${this.setupDetails.serviceName} 
+        ${this.$t("for")} 
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+          ${this.$t("disclaimer2")} 
+         ${this.operatorDetails.textAr}
+          ${"إرسل"}
+          ${this.setupDetails.unsubKeyword} 
+          ${this.$t("to")}
+         ${this.operatorDetails.shortcode}
+          ${this.$t("disclaimer3")} 
+         `;
+      }
+    },
+    QAdisclaimer() {
+      if (this.$store.state.selectedLanguage === "EN") {
+        return `
+        ${this.$t("disclaimerqa")} 
+        ${this.setupDetails.serviceName} 
+        ${this.$t("disclaimerqa1")}
+        ${"then you will be charged"}
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${"you can unsubscribe at any time."}
+         ${this.$t("disclaimer3")} 
+         ${this.$t("or")} 
+         ${this.$t("for")}
+         ${this.operatorDetails.text}
+        ${"customers to unsubscribe send"}
+        ${this.setupDetails.unsubKeyword} 
+        ${this.$t("to")}
+        ${this.operatorDetails.shortcode}
+        ${"for free"}
+         ${this.$t("disclaimerqa2")}  `;
+      } else {
+        return ` ${this.$t("disclaimerqa")} 
+        ${this.setupDetails.serviceName} 
+        ${this.$t("disclaimerqa1")}
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${"،ويمكنك إلغاء الاشتراك في أي وقت."}
+         ${this.$t("disclaimer3")} 
+        ${this.$t("or")} 
+         ${"لعملاء "} 
+         ${this.operatorDetails.textAr}
+        ${"لإلغاء الاشتراك بإرسال"}
+        ${this.setupDetails.unsubKeyword} 
+        ${this.$t("to")}
+        ${this.operatorDetails.shortcode}
+        ${"مجانًا"}
+         ${this.$t("disclaimerqa2")}  `;
+      }
+    }
   },
   methods: {
     onMobileEnter() {
       this.loading = true;
       this.$store
         .dispatch("addSub", [this.MSISDN, this.selectedOperator])
-        .then((response) => {
+        .then(response => {
           this.$store.commit("noOfReq");
           if (!response.response.errorMessage) {
             this.loading = false;
             this.e1 = 2;
+            if (this.$store.state.selectedCountry === "UAE") {
+              this.$tours["pincodePage1"].start();
+            } else {
+              this.$tours["pincodePage"].start();
+            }
           } else {
-            this.alert1 = {
-              type: "error",
-              message: response.response.errorMessage,
-            };
-            this.loading = false;
+            this.e1 = 2;
+            if (this.$store.state.selectedCountry === "UAE") {
+              this.$tours["pincodePage1"].start();
+            } else {
+              this.$tours["pincodePage"].start();
+            }
+            // this.alert1 = {
+            //   type: "error",
+            //   message: response.response.errorMessage
+            // };
+            // this.loading = false;
           }
         });
     },
     onVerify() {
       this.loading = true;
-      this.$store.dispatch("Verify", this.PinCode).then((response) => {
+      this.$store.dispatch("Verify", this.PinCode).then(response => {
         this.$store.commit("noOfReq");
         if (!response.response.errorMessage) {
           this.loading = false;
           this.e1 = 3;
-          if (this.$store.state.selectedCountry === "UAE") {
-            this.$tours["pincodePage1"].start();
-          } else {
-            this.$tours["pincodePage"].start();
-          }
         } else {
-          this.alert2 = {
-            type: "error",
-            message: response.response.errorMessage,
-          };
-          this.loading = false;
+          this.e1 = 3;
+          // this.alert2 = {
+          //   type: "error",
+          //   message: response.response.errorMessage
+          // };
+          // this.loading = false;
         }
       });
     },
     onResend() {
       this.loading = true;
-      this.$store.dispatch("Resend").then((response) => {
+      this.$store.dispatch("Resend").then(response => {
         this.$store.commit("noOfReq");
         if (!response.response.errorMessage) {
           this.loading = false;
           this.alert2 = {
             type: "success",
-            message: "pin code was sent successfully",
+            message: "pin code was sent successfully"
           };
           let timer = this.onResend.timer;
           if (timer) {
@@ -420,12 +673,12 @@ export default {
         } else {
           this.alert2 = {
             type: "error",
-            message: response.response.errorMessage,
+            message: response.response.errorMessage
           };
           this.loading = false;
         }
       });
-    },
+    }
   },
   mounted() {
     if (this.$store.state.selectedCountry === "UAE") {
@@ -433,7 +686,7 @@ export default {
     } else {
       this.$tours["onMobileEnter"].start();
     }
-  },
+  }
 };
 </script>
 
@@ -444,5 +697,8 @@ export default {
 .inputPrice input::-webkit-outer-spin-button,
 .inputPrice input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+.bold {
+  font-weight: bold;
 }
 </style>
