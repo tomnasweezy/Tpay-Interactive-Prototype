@@ -75,6 +75,7 @@
                         type="number"
                         class="inputPrice"
                         v-model="MSISDN"
+                        v-if="show()"
                       ></v-text-field>
 
                       <v-tour name="onMobileEnter" :steps="step0"></v-tour>
@@ -89,7 +90,7 @@
                           @click="onMobileEnter"
                         >{{ $t("UAEsubscribeButton") }}</v-btn>
                         <v-btn
-                          v-else
+                          v-else-if="show()"
                           id="v-step-0"
                           color="primary"
                           large
@@ -141,7 +142,7 @@
                           {{this.$t(this.setupDetails.frequency)}}
                         </span>
                       </p>
-                      <!-- -------------mobile number disclaimer ----------- -->
+                      <!-- -------------mobile number Disclaimer section ----------- -->
 
                       <p
                         v-if="operatorDetails.disclaimeravailablity && 
@@ -149,6 +150,20 @@
                         this.operatorDetails.operatorCode === '42701'"
                         class="black--text"
                       >{{ QAdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'KSA' 
+                        "
+                        class="black--text"
+                      >{{ KSAdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'JO' &&
+                         this.operatorDetails.shortcode === '91825'
+                        "
+                        class="black--text"
+                      >{{ JOAdisclaimer }}</p>
+
                       <p
                         v-else-if="operatorDetails.disclaimeravailablity"
                         class="black--text"
@@ -241,7 +256,7 @@
                           @click="onVerify"
                         >{{ $t("UAEPincodesubscribeButton") }}</v-btn>
                         <v-btn
-                          v-if="this.$store.state.selectedCountry === 'QA'"
+                          v-else-if="this.$store.state.selectedCountry === 'QA'"
                           id="v-step-2"
                           color="primary"
                           large
@@ -249,7 +264,7 @@
                           @click="onVerify"
                         >{{ $t("QAPincodesubscribeButton") }}</v-btn>
                         <v-btn
-                          v-else
+                          v-else-if="show()"
                           id="v-step-2"
                           color="primary"
                           large
@@ -309,6 +324,20 @@
                         this.operatorDetails.operatorCode === '42701'"
                         class="black--text"
                       >{{ QAdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'KSA' 
+                        "
+                        class="black--text"
+                      >{{ KSAdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'JO' &&
+                         this.operatorDetails.shortcode === '91825'
+                        "
+                        class="black--text"
+                      >{{ JOAdisclaimer }}</p>
+
                       <p
                         v-else-if="operatorDetails.disclaimeravailablity"
                         class="black--text"
@@ -604,6 +633,111 @@ export default {
         ${"مجانًا"}
          ${this.$t("disclaimerqa2")}  `;
       }
+    },
+    KSAdisclaimer() {
+      if (this.$store.state.selectedLanguage === "EN") {
+        console.log(this.operatorDetails.operatorCode);
+        return `
+        ${this.$t("disclaimerksa")}
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${"automatically until you unsubscribe."}
+        ${this.$t("disclaimerksa1")}
+         ${this.$t("disclaimerksa2")}
+         ${
+           this.operatorDetails.operatorCode === "42004"
+             ? " or For" +
+               " " +
+               this.operatorDetails.text +
+               " " +
+               "users, please send" +
+               " " +
+               this.setupDetails.unsubKeyword +
+               " " +
+               this.$t("to") +
+               " " +
+               this.operatorDetails.shortcode
+             : ""
+         }
+         ${this.$t("disclaimerksa2")}
+         
+
+          `;
+      } else {
+        return ` 
+         ${this.$t("disclaimerksa")}
+         ${this.operatorDetails.textAr}
+        ${"سيتم تجديد الاشتراك تلقائيًا بسعر"}
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${"حتى تلغي اشتراكك."}
+        ${this.$t("disclaimerksa1")}
+         ${this.$t("disclaimerksa3")}
+         ${
+           this.operatorDetails.operatorCode === "42004"
+             ? "أو قم بإرسال " +
+               " " +
+               this.setupDetails.unsubKeyword +
+               " " +
+               this.$t("to") +
+               " " +
+               this.operatorDetails.shortcode
+             : ""
+         } 
+          ${this.$t("disclaimerksa2")}
+        
+        
+        
+        `;
+      }
+    },
+    JOAdisclaimer() {
+      if (this.$store.state.selectedLanguage === "EN") {
+        return `
+      ${this.$t("disclaimerJor1")}
+      ${this.setupDetails.serviceName} 
+         ${this.$t("for")}
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${"please Send SUB G to "}
+        ${this.operatorDetails.shortcode}
+        ${this.$t("disclaimer2")} 
+         ${this.$t("for")} 
+         ${this.operatorDetails.text}
+          ${"subscribers please send"}
+          ${this.setupDetails.unsubKeyword} 
+          ${this.$t("to")}
+         ${this.operatorDetails.shortcode}
+          ${this.$t("disclaimer3")} 
+          `;
+      } else {
+        return `
+         ${this.$t("disclaimerJor1")}
+          ${this.setupDetails.serviceName} 
+           ${this.$t("for")}
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${" قم بإرسال "}
+        ${"SUB G"}
+        ${"الى "}
+         ${this.operatorDetails.shortcode}
+          ${"و "}
+        ${this.$t("disclaimer2")} 
+         ${this.operatorDetails.textAr}
+          ${"قم بإرسال"}
+          ${this.setupDetails.unsubKeyword} 
+          ${this.$t("to")}
+         ${this.operatorDetails.shortcode}
+          ${this.$t("disclaimer3")} 
+        
+
+
+         `;
+      }
     }
   },
   methods: {
@@ -636,6 +770,19 @@ export default {
           }
         });
     },
+    show() {
+      if (
+        this.$store.state.selectedCountry === "JO" &&
+        this.operatorDetails.shortcode === "91825"
+      ) {
+        this.$tours["onMobileEnter"].stop();
+        return false;
+      } else {
+        // this.$tours["onMobileEnter"].start();
+        return true;
+      }
+    },
+
     onVerify() {
       this.loading = true;
       this.$store.dispatch("Verify", this.PinCode).then(response => {
