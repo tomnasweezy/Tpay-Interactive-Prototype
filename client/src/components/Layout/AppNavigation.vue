@@ -7,7 +7,10 @@
         <v-icon>mdi-settings</v-icon>
       </v-btn>
       <v-menu offset-y>
-        <template v-slot:activator="{ on }">
+        <template v-if="this.$store.state.selectedCountry === 'LY'" v-slot:activator="{ off}">
+          <v-btn depressed v-on="on">{{selectedlanguage}}</v-btn>
+        </template>
+        <template v-else v-slot:activator="{ on }">
           <v-btn depressed v-on="on">{{selectedlanguage}}</v-btn>
         </template>
         <v-list>
@@ -37,7 +40,22 @@ export default {
   },
   computed: {
     language() {
-      return this.$store.state.langs;
+      console.log("okok", this.$store.state.selectedCountry);
+      if (this.$store.state.selectedCountry === "LY") {
+        // console.log("here1");
+        return this.$store.state.langs[1];
+      } else if (
+        this.$store.state.selectedCountry != "AL" &&
+        this.$store.state.selectedCountry != "TN"
+      ) {
+        console.log("here2");
+        return this.$store.state.langs.slice(0, 2);
+      } else {
+        console.log("here3");
+        return this.$store.state.langs.slice(1, 3);
+      }
+
+      // return this.$store.state.langs;
     },
     selectedlanguage() {
       return this.$store.state.selectedLanguage;

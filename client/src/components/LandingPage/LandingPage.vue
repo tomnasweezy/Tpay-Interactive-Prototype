@@ -142,12 +142,29 @@
                           {{this.$t(this.setupDetails.frequency)}}
                         </span>
                       </p>
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
+                      this.$store.state.selectedCountry === 'OM' "
+                        class="text-center black--text"
+                      >
+                        <span class="bold">
+                          {{$t("upDiscom")}}
+                          {{this.setupDetails.price}}
+                          {{this.currencyText}}
+                          {{this.$t(this.setupDetails.frequency)}}
+                        </span>
+                      </p>
                       <!-- -------------mobile number Disclaimer section ----------- -->
 
                       <p
                         v-if="operatorDetails.disclaimeravailablity && 
                         this.$store.state.selectedCountry === 'QA' &&
                         this.operatorDetails.operatorCode === '42701'"
+                        class="black--text"
+                      >{{ QAdisclaimer }}</p>
+                      <p
+                        v-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'OM' "
                         class="black--text"
                       >{{ QAdisclaimer }}</p>
                       <p
@@ -314,6 +331,19 @@
                         this.$t(this.setupDetails.frequency)
                         }}
                         {{this.operatorDetails.isVat ? $t("VatInclusive") : $t("VatExcluded") }}
+                      </p>
+
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
+                      this.$store.state.selectedCountry === 'OM' "
+                        class="text-center black--text"
+                      >
+                        <span class="bold">
+                          {{$t("upDiscom")}}
+                          {{this.setupDetails.price}}
+                          {{this.currencyText}}
+                          {{this.$t(this.setupDetails.frequency)}}
+                        </span>
                       </p>
 
                       <!-- ------- Pin Code Disclaimer section------------- -->
@@ -584,6 +614,7 @@ export default {
         ${this.currencyText} 
         ${this.$t(this.setupDetails.frequency)}
           ${this.$t("disclaimer2")} 
+          ${this.$store.state.selectedCountry === "PS" ? "لمستخدمي " : "لعملاء"}
          ${this.operatorDetails.textAr}
           ${"إرسل"}
           ${this.setupDetails.unsubKeyword} 

@@ -271,7 +271,16 @@ export default {
   },
   computed: {
     language() {
-      return this.$store.state.langs;
+      console.log(this.selectedCountry);
+      if (this.selectedCountry === "LY") {
+        return this.$store.state.langs[1];
+      } else if (this.selectedCountry != "AL" && this.selectedCountry != "TN") {
+        console.log("here3");
+        return this.$store.state.langs.slice(0, 2);
+      } else {
+        console.log("here1");
+        return this.$store.state.langs.slice(1, 3);
+      }
     },
     countries() {
       return this.$store.state.countries;
