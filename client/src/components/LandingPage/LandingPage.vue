@@ -132,6 +132,49 @@
 
                       <p
                         v-if="operatorDetails.isdownDisc &&
+                        this.$store.state.selectedCountry === 'TN' ||
+                        this.$store.state.selectedCountry === 'AL' 
+                        
+                        "
+                        class="text-center black--text"
+                      >
+                        {{$t("upDisctn")}}
+                        {{this.setupDetails.price}}
+                        {{this.currencyText}}
+                        {{this.$t(this.setupDetails.frequency)}}
+                      </p>
+
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
+                        this.$store.state.selectedCountry === 'BH' 
+                        
+                        "
+                        class="text-center black--text"
+                      >
+                        {{$t("upDiscbh")}}
+                        {{this.$store.state.selectedLanguage === "EN" ?
+                        this.setupDetails.serviceName + " "+
+                        "for" + " "+
+                        this.operatorDetails.text + " "+
+                        "customers " + " "+
+                        "is" + " "+
+                        this.setupDetails.price + " "+
+                        this.currencyText + " "+
+                        this.$t(this.setupDetails.frequency) + " "+
+                        "with 5% VAT exclusive. Charging cycle continues until you unsubscribe."
+                        :
+                        this.setupDetails.serviceName + " "+
+                        "لعملاء" + " "+
+                        this.operatorDetails.textAr + " "+
+                        "هى " + " "+
+                        this.setupDetails.price + " "+
+                        this.currencyText + " "+
+                        this.$t(this.setupDetails.frequency) +" "+
+                        "غير شاملة لضريبة القيمة المضافة بنسبة 5% وسوف يتم تجديده تلقائياً حتي يتم الغاء الاشتراك"}}
+                      </p>
+
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
                         this.$store.state.selectedCountry === 'QA' "
                         class="text-center black--text"
                       >
@@ -142,6 +185,7 @@
                           {{this.$t(this.setupDetails.frequency)}}
                         </span>
                       </p>
+
                       <p
                         v-if="operatorDetails.isdownDisc &&
                       this.$store.state.selectedCountry === 'OM' "
@@ -163,7 +207,20 @@
                         class="black--text"
                       >{{ QAdisclaimer }}</p>
                       <p
-                        v-if="operatorDetails.disclaimeravailablity && 
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'TN' ||
+                        this.$store.state.selectedCountry === 'AL' 
+                        "
+                        class="black--text"
+                      >{{ TNdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'BH' 
+                        "
+                        class="black--text"
+                      >{{ BHdisclaimer }}</p>
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
                         this.$store.state.selectedCountry === 'OM' "
                         class="black--text"
                       >{{ QAdisclaimer }}</p>
@@ -315,6 +372,48 @@
                       </p>
 
                       <p
+                        v-if="operatorDetails.isdownDisc &&
+                        this.$store.state.selectedCountry === 'BH' 
+                        
+                        "
+                        class="text-center black--text"
+                      >
+                        {{$t("upDiscbh")}}
+                        {{this.$store.state.selectedLanguage === "EN" ?
+                        this.setupDetails.serviceName + " "+
+                        "for" + " "+
+                        this.operatorDetails.text + " "+
+                        "customers " + " "+
+                        "is" + " "+
+                        this.setupDetails.price + " "+
+                        this.currencyText + " "+
+                        this.$t(this.setupDetails.frequency) + " "+
+                        "with 5% VAT exclusive. Charging cycle continues until you unsubscribe."
+                        :
+                        this.setupDetails.serviceName + " "+
+                        "لعملاء" + " "+
+                        this.operatorDetails.textAr + " "+
+                        "هى " + " "+
+                        this.setupDetails.price + " "+
+                        this.currencyText + " "+
+                        this.$t(this.setupDetails.frequency) +" "+
+                        "غير شاملة لضريبة القيمة المضافة بنسبة 5% وسوف يتم تجديده تلقائياً حتي يتم الغاء الاشتراك"}}
+                      </p>
+
+                      <p
+                        v-if="operatorDetails.isdownDisc &&
+                        this.$store.state.selectedCountry === 'TN' ||
+                        this.$store.state.selectedCountry === 'AL' 
+                        "
+                        class="text-center black--text"
+                      >
+                        {{$t("upDisctn")}}
+                        {{this.setupDetails.price}}
+                        {{this.currencyText}}
+                        {{this.$t(this.setupDetails.frequency)}}
+                      </p>
+
+                      <p
                         v-if="operatorDetails.isUpDisc &&
                         this.$store.state.selectedCountry === 'UAE' "
                         class="text-center black--text"
@@ -354,6 +453,22 @@
                         this.operatorDetails.operatorCode === '42701'"
                         class="black--text"
                       >{{ QAdisclaimer }}</p>
+
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'TN' ||
+                        this.$store.state.selectedCountry === 'AL' 
+                        "
+                        class="black--text"
+                      >{{ TNdisclaimer }}</p>
+
+                      <p
+                        v-else-if="operatorDetails.disclaimeravailablity && 
+                        this.$store.state.selectedCountry === 'BH' 
+                        "
+                        class="black--text"
+                      >{{ BHdisclaimer }}</p>
+
                       <p
                         v-else-if="operatorDetails.disclaimeravailablity && 
                         this.$store.state.selectedCountry === 'KSA' 
@@ -665,9 +780,73 @@ export default {
          ${this.$t("disclaimerqa2")}  `;
       }
     },
+    TNdisclaimer() {
+      if (this.$store.state.selectedLanguage === "FR") {
+        return `
+        ${this.$t("disclaimerJtn")} 
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${"sera déduit de votre solde"}
+         ${this.$t("disclaimerJtn1")} 
+         ${this.$t("disclaimerJtn2")} 
+        ${this.setupDetails.unsubKeyword} 
+        ${this.$t("to")} 
+        ${this.operatorDetails.shortcode}
+         ${this.$t("disclaimerJtn3")} 
+`;
+      } else {
+        return `
+        ${this.$t("disclaimerJtn")} 
+        ${this.setupDetails.price} 
+        ${this.currencyText} 
+        ${this.$t(this.setupDetails.frequency)}
+        ${"من رصيدك."}
+         ${this.$t("disclaimerJtn1")} 
+         ${this.$t("disclaimerJtn2")} 
+        ${this.setupDetails.unsubKeyword} 
+        ${this.$t("to")} 
+        ${this.operatorDetails.shortcode}
+         ${this.$t("disclaimerJtn3")} 
+`;
+      }
+    },
+    BHdisclaimer() {
+      if (this.$store.state.selectedLanguage === "EN") {
+        return `
+        ${this.$t("disclaimerbh")}
+         ${this.operatorDetails.text}
+        ${this.$t("disclaimerbh1")}
+        ${
+          this.setupDetails.serviceName
+        } ${"who manages this subscription service"}
+        ${this.$t("disclaimerbh2")}
+         ${this.setupDetails.unsubKeyword} 
+          ${this.$t("to")}
+         ${this.operatorDetails.shortcode}
+        ${this.$t("disclaimerbh3")}
+        ${this.$t("disclaimerbh4")}
+        ${this.$t("disclaimerbh5")}
+
+      `;
+      } else {
+        return `
+      ${this.$t("disclaimerbh")}
+         ${this.operatorDetails.textAr}
+        ${this.$t("disclaimerbh1")}
+        ${this.setupDetails.serviceName} 
+        ${this.$t("disclaimerbh2")}
+         ${this.setupDetails.unsubKeyword} 
+          ${this.$t("to")}
+         ${this.operatorDetails.shortcode}
+        ${this.$t("disclaimerbh3")}
+        ${this.$t("disclaimerbh4")}
+        ${this.$t("disclaimerbh5")}
+      `;
+      }
+    },
     KSAdisclaimer() {
       if (this.$store.state.selectedLanguage === "EN") {
-        console.log(this.operatorDetails.operatorCode);
         return `
         ${this.$t("disclaimerksa")}
         ${this.setupDetails.price} 
