@@ -1106,27 +1106,20 @@ export default {
   },
   methods: {
     onMobileEnter() {
+      this.alert1 = null;
       this.loading = true;
       this.$store
         .dispatch("addSub", [this.MSISDN, this.selectedOperator])
         .then((response) => {
           this.$store.commit("noOfReq");
-          // if (!response.response.errorMessage) {
-          //   this.loading = false;
-          //   this.e1 = 2;
-          //   if (this.$store.state.selectedCountry === "UAE") {
-          //     this.$tours["pincodePage1"].start();
-          //   } else {
-          //     this.$tours["pincodePage"].start();
-          //   }
-          // } else {
-          //   // this.e1 = 2;
-          //   // if (this.$store.state.selectedCountry === "UAE") {
-          //   //   this.$tours["pincodePage1"].start();
-          //   // } else {
-          //   //   this.$tours["pincodePage"].start();
-          //   // }
-          console.log;
+
+          this.loading = false;
+          this.e1 = 2;
+          if (this.$store.state.selectedCountry === "UAE") {
+            this.$tours["pincodePage1"].start();
+          } else {
+            this.$tours["pincodePage"].start();
+          }
         })
         .catch((error) => {
           this.alert1 = {
@@ -1150,21 +1143,24 @@ export default {
     },
 
     onVerify() {
+      this.alert2 = null;
       this.loading = true;
-      this.$store.dispatch("Verify", this.PinCode).then((response) => {
-        this.$store.commit("noOfReq");
-        if (!response.response.errorMessage) {
+      this.$store
+        .dispatch("Verify", this.PinCode)
+        .then((response) => {
+          this.$store.commit("noOfReq");
+          // if (!response.response.errorMessage) {
           this.loading = false;
           this.e1 = 3;
-        } else {
-          // this.e1 = 3;
+        })
+        .catch((error) => {
+          console.log(error);
           this.alert2 = {
             type: "error",
-            message: response.response.errorMessage,
+            message: error.errorMessage,
           };
           this.loading = false;
-        }
-      });
+        });
     },
     onResend() {
       this.loading = true;

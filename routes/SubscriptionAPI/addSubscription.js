@@ -4,8 +4,6 @@ const router = express.Router();
 const axios = require("axios");
 const i18n = require("i18n");
 
-console.error(i18n.__("alreadySubscribedError"));
-
 //AddSubsriptionContractRequest
 router.post("/", (req, res, next) => {
   // if (!req.headers.pubkey || !req.headers.privkey) {
@@ -74,12 +72,12 @@ router.post("/", (req, res, next) => {
         response: response.data,
       };
 
-      // res.status(500).send("Something went wrong!!");
       return new Promise((resolve, reject) => {
         if (response.data.operationStatusCode == 51) {
           let errorResponse = {
             errorMessage: response.data.errorMessage,
             responseWhole: requestandResponse,
+            routeName: "addSub",
           };
           reject(errorResponse);
         } else {

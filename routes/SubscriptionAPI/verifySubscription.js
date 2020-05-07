@@ -4,13 +4,13 @@ const router = express.Router();
 const axios = require("axios");
 
 //VerifySubscriptionContract
-router.post("/", (req, res) => {
-  if (!req.headers.pubkey || !req.headers.privkey) {
-    return res.status(401).json({ error: "please provide credentials" });
-  }
-  if (!req.body.contractId || !req.body.pinCode) {
-    return res.status(400).json({ error: "one of the parameters is missing" });
-  }
+router.post("/", (req, res, next) => {
+  // if (!req.headers.pubkey || !req.headers.privkey) {
+  //   return res.status(401).json({ error: "please provide credentials" });
+  // }
+  // if (!req.body.contractId || !req.body.pinCode) {
+  //   return res.status(400).json({ error: "one of the parameters is missing" });
+  // }
   var body = {
     subscriptionContractId: req.body.contractId,
     pinCode: req.body.pinCode,
@@ -33,11 +33,21 @@ router.post("/", (req, res) => {
         request: body,
         response: response.data,
       };
-      res.send(requestandResponse);
+
+      return new Promise((resolve, reject) => {
+        if (response.data.operationStatusCode == 51) {
+          let errorResponse = {
+            errorMessage: response.data.errorMessage,
+            responseWhole: requestandResponse,
+            routeName: "verifySub",
+          };
+          reject(errorResponse);
+        } else {
+          res.send(requestandResponse);
+        }
+      }).catch(next);
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch(next);
 });
 
 module.exports = router;

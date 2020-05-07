@@ -10,7 +10,7 @@
     "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Mostafa Salah",
+  "author": "Mostafa Salah & Ahmed Hisham",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",

@@ -1,8 +1,12 @@
 {
-    "alreadySubscribedError": "This number  ",
+    "alreadySubscribedError": "This number is already subscribed to our service. ",
     "unvalidMobileNumber": "Please enter a valid phone number for the selected mobile network. ",
     "empytMobileInput": "Mobile number is required and cannot be empty. ",
     "blacklistedNumber": "Sorry, this phone number can’t be activated please contact support team at example@support ",
     "duplicateRequest": "Sorry, we couldn’t complete your registration, wait a couple of minutes and try again",
-    "duplicateSubscrition": "Sorry, you cannot signup please try again after 1 day ."
+    "duplicateSubscrition": "Sorry, you cannot signup please try again after 1 day .",
+    "wrongPinCode": "Sorry, the Pin Code is invalid.",
+    "unkownError": "Sorry we have encountered a problem from our Side please try again later. Or contact support team at example@support.com.",
+    "exceedAttempts": "Sorry, you have exceeded the number of attempts please try again in few minutes.",
+    "failedToConnect": "There was an internal server error"
 }

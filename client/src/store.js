@@ -76,7 +76,8 @@ export default new Vuex.Store({
         commit("setAddSubRes", response.data);
         return response.data;
       } catch (err) {
-        commit("setAddSubRes", []);
+        commit("setAddSubRes", err.response.data.responseWhole);
+        throw err.response.data;
       }
     },
     async Verify({ state, commit }, pincode) {
@@ -100,7 +101,8 @@ export default new Vuex.Store({
         commit("verifyRes", response.data);
         return response.data;
       } catch (err) {
-        commit("verifyRes", []);
+        commit("verifyRes", err.response.data.responseWhole);
+        throw err.response.data;
       }
     },
     async Resend({ state, commit }) {
