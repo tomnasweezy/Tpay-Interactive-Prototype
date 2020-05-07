@@ -16,7 +16,7 @@ export default new Vuex.Store({
     verifyRes: null,
     resendRes: null,
     sendFreeRes: null,
-    noOfReq: 0
+    noOfReq: 0,
   },
   mutations: {
     setSetup(state, payload) {
@@ -40,7 +40,7 @@ export default new Vuex.Store({
     noOfReq(state) {
       //state.noOfReq++;
       state.noOfReq = state.addSubRes ? 1 : state.noOfReq;
-    }
+    },
   },
   actions: {
     async addSub({ state, commit }, [msisdn, operatorCode]) {
@@ -64,13 +64,13 @@ export default new Vuex.Store({
             freeStartDays: state.setupDetails.freeStartDays,
             subscriptionPlanId: state.setupDetails.subPlanId,
             catalogName: state.setupDetails.catalogName,
-            productSKU: state.setupDetails.productId
+            productSKU: state.setupDetails.productId,
           },
           {
             headers: {
               pubkey: state.setupDetails.publicKey,
-              privkey: state.setupDetails.privateKey
-            }
+              privkey: state.setupDetails.privateKey,
+            },
           }
         );
         commit("setAddSubRes", response.data);
@@ -88,13 +88,13 @@ export default new Vuex.Store({
             pinCode: pincode,
             transactionId: !state.addSubRes.response.transactionId
               ? ""
-              : state.addSubRes.response.transactionId
+              : state.addSubRes.response.transactionId,
           },
           {
             headers: {
               pubkey: state.setupDetails.publicKey,
-              privkey: state.setupDetails.privateKey
-            }
+              privkey: state.setupDetails.privateKey,
+            },
           }
         );
         commit("verifyRes", response.data);
@@ -108,13 +108,13 @@ export default new Vuex.Store({
         let response = await axios.post(
           "/api/v1/resendPinCode",
           {
-            contractId: state.addSubRes.response.subscriptionContractId
+            contractId: state.addSubRes.response.subscriptionContractId,
           },
           {
             headers: {
               pubkey: state.setupDetails.publicKey,
-              privkey: state.setupDetails.privateKey
-            }
+              privkey: state.setupDetails.privateKey,
+            },
           }
         );
         commit("resendRes", response.data);
@@ -122,6 +122,6 @@ export default new Vuex.Store({
       } catch (err) {
         commit("resendRes", []);
       }
-    }
-  }
+    },
+  },
 });

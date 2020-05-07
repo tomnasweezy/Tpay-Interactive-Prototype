@@ -5,12 +5,12 @@ const axios = require("axios");
 
 //VerifySubscriptionContract
 router.post("/", (req, res) => {
-  // if (!req.headers.pubkey || !req.headers.privkey) {
-  //   return res.status(401).json({ error: "please provide credentials" });
-  // }
-  // if (!req.body.contractId || !req.body.pinCode) {
-  //   return res.status(400).json({ error: "one of the parameters is missing" });
-  // }
+  if (!req.headers.pubkey || !req.headers.privkey) {
+    return res.status(401).json({ error: "please provide credentials" });
+  }
+  if (!req.body.contractId || !req.body.pinCode) {
+    return res.status(400).json({ error: "one of the parameters is missing" });
+  }
   var body = {
     subscriptionContractId: req.body.contractId,
     pinCode: req.body.pinCode,

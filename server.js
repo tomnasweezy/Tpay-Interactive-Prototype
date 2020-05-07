@@ -2,11 +2,18 @@ const express = require("express");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
+const i18n = require("i18n");
+const errorHandlingMiddleware = require("./Middleware/errorHandlingMiddleware");
+i18n.configure({
+  locales: ["en", "ar", "fr"],
+  directory: __dirname + "/locales",
+});
 
 dotenv.config({ path: "./config.env" });
 
 const app = express();
 app.use(bodyParser.json());
+// app.use(i18n.init);
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -34,6 +41,8 @@ app.use(
   "/api/v1/cancelSubscription",
   require("./routes/SubscriptionAPI/cancelSubscription")
 );
+
+errorHandlingMiddleware(app);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname + "/public/"));

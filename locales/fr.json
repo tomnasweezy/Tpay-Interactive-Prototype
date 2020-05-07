@@ -1,0 +1,8 @@
+{
+    "alreadySubscribedError": "This number  ",
+    "unvalidMobileNumber": "Please enter a valid phone number for the selected mobile network. ",
+    "empytMobileInput": "Mobile number is required and cannot be empty. ",
+    "blacklistedNumber": "Sorry, this phone number can’t be activated please contact support team at example@support ",
+    "duplicateRequest": "Sorry, we couldn’t complete your registration, wait a couple of minutes and try again",
+    "duplicateSubscrition": "Sorry, you cannot signup please try again after 1 day ."
+}
