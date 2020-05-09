@@ -1,12 +1,18 @@
 {
-    "alreadySubscribedError": "This number is already subscribed to our service. ",
-    "unvalidMobileNumber": "Please enter a valid phone number for the selected mobile network. ",
-    "empytMobileInput": "Mobile number is required and cannot be empty. ",
-    "blacklistedNumber": "Sorry, this phone number can’t be activated please contact support team at example@support ",
-    "duplicateRequest": "Sorry, we couldn’t complete your registration, wait a couple of minutes and try again",
-    "duplicateSubscrition": "Sorry, you cannot signup please try again after 1 day .",
-    "wrongPinCode": "Sorry, the Pin Code is invalid.",
-    "unkownError": "Sorry we have encountered a problem from our Side please try again later. Or contact support team at example@support.com.",
+    "alreadySubscribedError": "Ce numéro est déjà abonné à notre service. ",
+    "unvalidMobileNumber": "Veuillez entrer un numéro de téléphone valide pour le réseau mobile sélectionné. ",
+    "empytMobileInput": "Le numéro de portable est obligatoire et ne peut être laissé en blanc. ",
+    "blacklistedNumber": " Désolé, ce numéro de téléphone ne peut pas être activé. Veuillez contacter l’équipe de support à example @ support",
+    "duplicateRequest": "Désolé, nous n’avons pas pu terminer votre inscription, attendez quelques minutes et essayez à nouveau.",
+    "duplicateSubscrition": "Désolé, vous ne pouvez pas vous inscrire, veuillez réessayer dans 1 jour.",
+    "wrongPinCode": "Désolé, le numéro de vérification est invalide",
+    "unkownError": "Désolé, nous avons eu un problème de notre côté. Veuillez réessayer ultérieurement ou contactez notre équipe d'assistance à example@support.com.",
     "exceedAttempts": "Sorry, you have exceeded the number of attempts please try again in few minutes.",
-    "failedToConnect": "There was an internal server error"
+    "failedToConnect": "There was an internal server error",
+    "notEnoughCredit": "Désolé, vous n’avez pas assez de crédit",
+    "pincodeDurationEnded": "Désolé, votre numéro de vérification a expiré.",
+    "timeOutError": "Désolé, la connexion a expiré, veuillez réessayer dans quelques minutes.",
+    "inactiveMobileNumber": "Désolé, ce numéro de mobile est inactif",
+    "companyLine": "Désolé, une ligne de sociétés ne peut pas être utilisée",
+    "alreadyCanceled": "L'abonnement est déjà annulé"
 }

@@ -8,5 +8,11 @@
     "wrongPinCode": "Sorry, the Pin Code is invalid.",
     "unkownError": "Sorry we have encountered a problem from our Side please try again later. Or contact support team at example@support.com.",
     "exceedAttempts": "Sorry, you have exceeded the number of attempts please try again in few minutes.",
-    "failedToConnect": "There was an internal server error"
+    "failedToConnect": "There was an internal server error",
+    "notEnoughCredit": "Sorry, you don’t have enough Credit",
+    "pincodeDurationEnded": "Sorry, this Pin Code duration has expired.",
+    "timeOutError": "Sorry the connection has timed out please try again in few minutes.",
+    "inactiveMobileNumber": "Sorry, this mobile number is Inactive",
+    "companyLine": "Sorry, cannot use comp line",
+    "alreadyCanceled": "The Subscribtion is Already been Canceled"
 }

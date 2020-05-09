@@ -122,7 +122,52 @@ export default new Vuex.Store({
         commit("resendRes", response.data);
         return response.data;
       } catch (err) {
-        commit("resendRes", []);
+        commit("resendRes", err.response.data.responseWhole);
+        throw err.response.data;
+      }
+    },
+    async welcomeSms({ state, commit }, [msisdn, operatorCode, message]) {
+      try {
+        let response = await axios.post(
+          "/api/v1/sendSMS",
+          {
+            messageBody: message,
+            MSISDN: msisdn,
+            operatorCode: operatorCode,
+          },
+          {
+            headers: {
+              pubkey: state.setupDetails.publicKey,
+              privkey: state.setupDetails.privateKey,
+            },
+          }
+        );
+        commit("sendFreeSms", response.data);
+        return response.data;
+      } catch (err) {
+        commit("sendFreeSms", err.response.data.responseWhole);
+        throw err.response.data;
+      }
+    },
+    async cancelSub({ state, commit }) {
+      try {
+        let response = await axios.post(
+          "/api/v1/cancelSubscription",
+          {
+            contractId: state.verifyRes.response.subscriptionContractId,
+          },
+          {
+            headers: {
+              pubkey: state.setupDetails.publicKey,
+              privkey: state.setupDetails.privateKey,
+            },
+          }
+        );
+        commit("cancelSub", response.data);
+        return response.data;
+      } catch (err) {
+        commit("cancelSub", err.response.data.responseWhole);
+        throw err.response.data;
       }
     },
   },

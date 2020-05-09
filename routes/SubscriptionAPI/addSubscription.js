@@ -79,15 +79,12 @@ router.post("/", (req, res, next) => {
             responseWhole: requestandResponse,
             routeName: "addSub",
           };
+          // console.log(errorResponse);
           reject(errorResponse);
         } else {
           res.send(requestandResponse);
         }
       }).catch(next);
-      // throw new Error("okok");
-      //  else {
-      //   res.send(requestandResponse);
-      // }
     })
     .catch(next);
 });

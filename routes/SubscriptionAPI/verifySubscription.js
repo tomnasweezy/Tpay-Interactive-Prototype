@@ -41,6 +41,7 @@ router.post("/", (req, res, next) => {
             responseWhole: requestandResponse,
             routeName: "verifySub",
           };
+          // console.log(errorResponse);
           reject(errorResponse);
         } else {
           res.send(requestandResponse);
