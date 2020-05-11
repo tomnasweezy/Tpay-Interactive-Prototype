@@ -41,6 +41,11 @@ app.use(
   "/api/v1/cancelSubscription",
   require("./routes/SubscriptionAPI/cancelSubscription")
 );
+//HeaderEnrichemnt
+app.use(
+  "/api/v1/heEnrichment",
+  require("./routes/SubscriptionAPI/sessionToken")
+);
 
 errorHandlingMiddleware(app);
 

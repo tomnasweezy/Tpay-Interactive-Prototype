@@ -646,6 +646,7 @@
                 >
                   <v-list dense nav class="py-0">
                     <v-list-item two-line :class="miniVariant && 'px-0'">
+                      <!-- ussed URL for Icons  https://cdn.materialdesignicons.com/2.6.95/ -->
                       <v-icon small class="red--text mdi-36px">mdi-account</v-icon>
 
                       <v-list-item-content>
@@ -705,6 +706,7 @@ export default {
       opertorShortCodes: "",
       operatorNames: "",
       currencyText: "",
+      token: "",
       items: [{ title: "Cancel Subscrition", icon: "mdi-cancel" }],
       // color: "primary",
       // colors: ["primary", "blue", "success", "red", "teal"],
@@ -1131,11 +1133,34 @@ export default {
     }
   },
   methods: {
+    sessionToken() {
+      this.loading = true;
+      this.$store
+        .dispatch("heSessionToken", [this.MSISDN, this.selectedOperator])
+        .then(response => {
+          this.$store.commit("noOfReq");
+
+          let recaptchaScript = document.createElement("script");
+          recaptchaScript.setAttribute("src", response);
+          document.head.appendChild(recaptchaScript);
+          // let heScript = document.createElement("script");
+          // heScript.src = response;
+          // document.appendChild(heScript);
+          // console.log("the response", document.head);
+        });
+      // this.token = TPay.HeaderEnrichment.sessionToken();
+      // this.loading = false;
+      // console.log(this.token);
+    },
+
     onMobileEnter() {
+      this.sessionToken();
+      this.token = TPay.HeaderEnrichment.sessionToken();
+      console.log(this.token);
       this.alert1 = null;
       this.loading = true;
       this.$store
-        .dispatch("addSub", [this.MSISDN, this.selectedOperator])
+        .dispatch("addSub", [this.MSISDN, this.selectedOperator, this.token])
         .then(response => {
           this.$store.commit("noOfReq");
 
@@ -1291,7 +1316,6 @@ export default {
     }
   },
   mounted() {
-    // this.e1 = 3;
     if (this.$store.state.selectedCountry === "UAE") {
       this.$tours["onMobileEnter1"].start();
     } else {

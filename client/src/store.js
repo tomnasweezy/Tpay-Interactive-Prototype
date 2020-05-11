@@ -43,7 +43,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async addSub({ state, commit }, [msisdn, operatorCode]) {
+    async addSub({ state, commit }, [msisdn, operatorCode, token]) {
       try {
         let response = await axios.post(
           "/api/v1/AddSubscription",
@@ -65,6 +65,7 @@ export default new Vuex.Store({
             subscriptionPlanId: state.setupDetails.subPlanId,
             catalogName: state.setupDetails.catalogName,
             productSKU: state.setupDetails.productId,
+            sessionToken: token,
           },
           {
             headers: {
@@ -167,6 +168,28 @@ export default new Vuex.Store({
         return response.data;
       } catch (err) {
         commit("cancelSub", err.response.data.responseWhole);
+        throw err.response.data;
+      }
+    },
+    async heSessionToken({ state, commit }, [msisdn, operatorCode]) {
+      try {
+        let response = await axios.post(
+          "/api/v1/heEnrichment",
+          {
+            MSISDN: msisdn,
+            operatorCode: operatorCode,
+          },
+          {
+            headers: {
+              pubkey: state.setupDetails.publicKey,
+              privkey: state.setupDetails.privateKey,
+            },
+          }
+        );
+        commit("sessionToken", response.data);
+        return response.data;
+      } catch (err) {
+        commit("sessionToken", err.response.data.responseWhole);
         throw err.response.data;
       }
     },

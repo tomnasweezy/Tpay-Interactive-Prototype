@@ -59,7 +59,8 @@ router.post("/", (req, res, next) => {
     !req.headers.pubkey ? process.env.TPAY_API_PUBLICKEY : req.headers.pubkey,
     !req.headers.privkey ? process.env.TPAY_API_PRIVATEKEY : req.headers.privkey
   );
-  body = { signature, ...body };
+  body = { signature, ...body, sessionToken: req.body.sessionToken };
+
   // throw new Error("okok");
   axios
     .post(
@@ -79,7 +80,7 @@ router.post("/", (req, res, next) => {
             responseWhole: requestandResponse,
             routeName: "addSub",
           };
-          // console.log(errorResponse);
+          console.log(errorResponse);
           reject(errorResponse);
         } else {
           res.send(requestandResponse);
