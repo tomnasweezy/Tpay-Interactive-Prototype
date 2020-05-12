@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
     !req.headers.pubkey ? process.env.TPAY_API_PUBLICKEY : req.headers.pubkey,
     !req.headers.privkey ? process.env.TPAY_API_PRIVATEKEY : req.headers.privkey
   );
-  let heScritp = `http://enrichment-staging.tpay.me/idxml.ashx/js-staging?date=${datestring}&lang=${language}&digest=${signature}&simulate=true&operatorcode=${req.body.operatorCode}&msisdn=${req.body.MSISDN}`;
+  let heScritp = `http://enrichment-staging.tpay.me/idxml.ashx/js-staging?date=${datestring}&lang=${language}&digest=${signature}&simulate=true&operatorcode=${"60201"}&msisdn=${"201286438693"}`;
   //   body = { signature, ...body };
   //   console.log(heScritp);
 

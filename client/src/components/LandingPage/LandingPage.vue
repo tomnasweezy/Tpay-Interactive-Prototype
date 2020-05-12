@@ -626,6 +626,12 @@
               <!-- <v-btn color="primary" large class="mb-3" @click="onCancelEnter">Cancel Subscrition</v-btn> -->
 
               <v-card height="400" class="overflow-hidden">
+                <div class="welcomeTextWrapper">
+                  <v-card class="welcomeTextcard" elevation="5">
+                    <p class="welcomeText">Welcome to {{this.setupDetails.serviceName}}</p>
+                  </v-card>
+                </div>
+
                 <v-alert
                   class="locatealert"
                   transition="scale-transition"
@@ -633,7 +639,6 @@
                   :type="alert3.type"
                   v-if="alert3"
                 >{{ alert3.message }}</v-alert>
-
                 <v-navigation-drawer
                   v-model="drawer"
                   :color="color"
@@ -650,7 +655,7 @@
                       <v-icon small class="red--text mdi-36px">mdi-account</v-icon>
 
                       <v-list-item-content>
-                        <v-list-item-title>User Profile</v-list-item-title>
+                        <v-list-item-title>My Account</v-list-item-title>
                         <v-list-item-subtitle>Tpay</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
@@ -661,17 +666,12 @@
                       <v-list-item-icon>
                         <v-icon>{{ item.icon }}</v-icon>
                       </v-list-item-icon>
-
                       <v-list-item-content>
                         <v-list-item-title @click="onCancelEnter">{{ item.title }}</v-list-item-title>
+                        <v-tour name="cancelPage" :steps="step4"></v-tour>
                       </v-list-item-content>
                     </v-list-item>
-                    <!-- <v-btn
-                      color="primary"
-                      large
-                      class="mb-3"
-                      @click="onCancelEnter"
-                    >Cancel Subscrition</v-btn>-->
+                    <div id="v-step-5"></div>
                   </v-list>
                 </v-navigation-drawer>
               </v-card>
@@ -706,6 +706,7 @@ export default {
       opertorShortCodes: "",
       operatorNames: "",
       currencyText: "",
+      expandOnHover: true,
       token: "",
       items: [{ title: "Cancel Subscrition", icon: "mdi-cancel" }],
       // color: "primary",
@@ -713,7 +714,7 @@ export default {
       right: false,
       permanent: false,
       miniVariant: false,
-      expandOnHover: true,
+
       background: false,
       step0: [
         {
@@ -785,6 +786,16 @@ export default {
           },
           content: `the <strong>Exit  </strong>!`,
           placement: "right"
+        }
+      ],
+      step4: [
+        {
+          target: "#v-step-5", // We're using document.querySelector() under the hood
+          header: {
+            title: "Cancelation API"
+          },
+          content: `<strong> Cancel API</strong>!`,
+          placement: "bottom"
         }
       ]
     };
@@ -1133,32 +1144,41 @@ export default {
     }
   },
   methods: {
-    sessionToken() {
-      this.loading = true;
-      this.$store
-        .dispatch("heSessionToken", [this.MSISDN, this.selectedOperator])
-        .then(response => {
-          this.$store.commit("noOfReq");
+    // async sessionToken() {
+    //   this.loading = true;
+    //   return
 
-          let recaptchaScript = document.createElement("script");
-          recaptchaScript.setAttribute("src", response);
-          document.head.appendChild(recaptchaScript);
-          // let heScript = document.createElement("script");
-          // heScript.src = response;
-          // document.appendChild(heScript);
-          // console.log("the response", document.head);
-        });
-      // this.token = TPay.HeaderEnrichment.sessionToken();
-      // this.loading = false;
-      // console.log(this.token);
-    },
+    //   // return this.token;
+    //   // this.loading = false;
+    //   // console.log(this.token);
+    // },
 
-    onMobileEnter() {
-      this.sessionToken();
+    async onMobileEnter() {
+      // let streq = await this.$store.dispatch("heSessionToken", [
+      //   this.MSISDN,
+      //   this.selectedOperator
+      // ]);
+      // this.$store.commit("noOfReq");
       this.token = TPay.HeaderEnrichment.sessionToken();
-      console.log(this.token);
+      // axios.get(streq).then(response => {
+      //   console.log("the motherfucken response", response);
+      // });
+      // let recaptchaScript = document.createElement("script");
+      // recaptchaScript.setAttribute("src", streq);
+      // recaptchaScript.setAttribute("type", "text/javascript");
+      // document.head.appendChild(recaptchaScript);
+      // let timer = this.onMobileEnter.timer;
+      // if (timer) {
+      //   clearTimeout(timer);
+      // }
+      // this.showAlert.timer = setTimeout(() => {
+      //   this.token = TPay.HeaderEnrichment.sessionToken();
+      // }, 500);
+      // this.loading = true;
+      // let st = this.sessionToken();
+      // console.log(streq);
+
       this.alert1 = null;
-      this.loading = true;
       this.$store
         .dispatch("addSub", [this.MSISDN, this.selectedOperator, this.token])
         .then(response => {
@@ -1279,7 +1299,7 @@ export default {
       }, 10000);
     },
     onCancelEnter() {
-      console.log("button clicked");
+      // console.log("button clicked");
       this.alert3 = null;
       this.loading = true;
       this.$store
@@ -1316,11 +1336,20 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.state.selectedCountry === "UAE") {
-      this.$tours["onMobileEnter1"].start();
-    } else {
-      this.$tours["onMobileEnter"].start();
-    }
+    this.$store.dispatch("heSessionToken", [" ", " "]).then(response => {
+      // return response;
+      let recaptchaScript = document.createElement("script");
+      recaptchaScript.setAttribute("src", response);
+      recaptchaScript.setAttribute("type", "text/javascript");
+      document.head.appendChild(recaptchaScript);
+      // this.e1 = 3;
+      this.$tours["cancelPage"].start();
+      if (this.$store.state.selectedCountry === "UAE") {
+        this.$tours["onMobileEnter1"].start();
+      } else {
+        this.$tours["onMobileEnter"].start();
+      }
+    });
   }
 };
 </script>
@@ -1343,5 +1372,37 @@ export default {
 .spacing {
   padding: 0;
   margin: 0;
+}
+
+.welcomeTextWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  /* border: 1px solid red; */
+  height: 100%;
+}
+
+.welcomeText {
+  text-align: center;
+
+  font-size: 30px;
+  font-family: "Courier New", Courier, monospace;
+  /* margin: 0; */
+}
+
+.welcomeTextcard {
+  background-color: #333;
+  width: 70%;
+  margin-top: 10%;
+  margin: auto;
+
+  height: 40%;
+
+  display: flex;
+  /* -webkit-box-pack: center; */
+  justify-content: center;
+
+  align-items: center;
 }
 </style>
