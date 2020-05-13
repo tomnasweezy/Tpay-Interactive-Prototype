@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
     "server": "nodemon server",
-    "client": "npm run build --prefix client",
+    "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Mostafa Salah & Ahmed Hisham",
@@ -16,6 +16,7 @@
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.2",
+    "connect-history-api-fallback": "^1.6.0",
     "crypto-js": "^3.3.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

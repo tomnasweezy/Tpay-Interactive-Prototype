@@ -4,11 +4,19 @@
       <v-col cols="10">
         <v-stepper v-model="e1">
           <v-stepper-header>
-            <v-stepper-step :complete="e1 > 1" step="1">{{ $t("stepperHeader1") }}</v-stepper-step>
+            <v-stepper-step :complete="e1 > 1" step="1">
+              {{
+              $t("stepperHeader1")
+              }}
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="e1 > 2" step="2">{{ $t("stepperHeader2") }}</v-stepper-step>
+            <v-stepper-step :complete="e1 > 2" step="2">
+              {{
+              $t("stepperHeader2")
+              }}
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -28,7 +36,11 @@
                 <v-card-text>
                   <v-row align="center" justify="center">
                     <v-col cols="12" md="6">
-                      <v-alert :type="alert1.type" v-if="alert1">{{ alert1.message }}</v-alert>
+                      <v-alert :type="alert1.type" v-if="alert1">
+                        {{
+                        alert1.message
+                        }}
+                      </v-alert>
                       <!-- -----Mobile number upper part---------              -->
                       <p
                         v-if="
@@ -628,7 +640,7 @@
               <v-card height="400" class="overflow-hidden">
                 <div class="welcomeTextWrapper">
                   <v-card class="welcomeTextcard" elevation="5">
-                    <p class="welcomeText">Welcome to {{this.setupDetails.serviceName}}</p>
+                    <p class="welcomeText">Welcome to {{ this.setupDetails.serviceName }}</p>
                   </v-card>
                 </div>
 
@@ -667,7 +679,11 @@
                         <v-icon>{{ item.icon }}</v-icon>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title @click="onCancelEnter">{{ item.title }}</v-list-item-title>
+                        <v-list-item-title @click="onCancelEnter">
+                          {{
+                          item.title
+                          }}
+                        </v-list-item-title>
                         <v-tour name="cancelPage" :steps="step4"></v-tour>
                       </v-list-item-content>
                     </v-list-item>
@@ -1154,12 +1170,14 @@ export default {
     // },
 
     async onMobileEnter() {
+      this.loading = true;
+      this.token = TPay.HeaderEnrichment.sessionToken();
       // let streq = await this.$store.dispatch("heSessionToken", [
       //   this.MSISDN,
       //   this.selectedOperator
       // ]);
       // this.$store.commit("noOfReq");
-      this.token = TPay.HeaderEnrichment.sessionToken();
+      //
       // axios.get(streq).then(response => {
       //   console.log("the motherfucken response", response);
       // });
@@ -1336,6 +1354,7 @@ export default {
     }
   },
   mounted() {
+    // this.e1 = 3;
     this.$store.dispatch("heSessionToken", [" ", " "]).then(response => {
       // return response;
       let recaptchaScript = document.createElement("script");
