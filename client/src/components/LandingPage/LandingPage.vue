@@ -1342,6 +1342,7 @@ export default {
       recaptchaScript.setAttribute("src", response);
       recaptchaScript.setAttribute("type", "text/javascript");
       document.head.appendChild(recaptchaScript);
+      console.log("here");
       // this.e1 = 3;
       this.$tours["cancelPage"].start();
       if (this.$store.state.selectedCountry === "UAE") {
