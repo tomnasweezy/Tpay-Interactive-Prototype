@@ -8,7 +8,6 @@ i18n.configure({
   locales: ["en", "ar", "fr"],
   directory: __dirname + "/locales",
 });
-
 dotenv.config({ path: "./config.env" });
 
 const app = express();
@@ -54,7 +53,12 @@ if (process.env.NODE_ENV === "production") {
   app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 }
 
-const port = process.env.PORT || 8000;
+// const port = process.env.PORT || 8000;
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+// app.listen(port);
 
 app.listen(port, () => {
   console.log(`listenning in ${process.env.NODE_ENV} mode on port ${port}`);
