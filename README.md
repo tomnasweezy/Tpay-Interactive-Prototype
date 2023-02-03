@@ -29,3 +29,9 @@ at this point the User / client should be getting a Pincode on his phone to be e
 For developers followig section show the API call made for following call 
 
 ![pincodeentrypage2](https://user-images.githubusercontent.com/16877555/216642239-e76ee2bd-2219-4df1-8dee-7ceb61b34605.png)
+
+
+
+
+
+NOTE: Project was shut down du to Flow Changes and New propsed solutions that doesnt require the merchants / developers create their own UI. Force redirection and handiling is done on the operators side (operators such as vodafone, orange, WE, Etisalat)
