@@ -2,6 +2,8 @@
 
 The project was part of my effort to enhance the product's presentation and interactivity for both merchants and commercial stakeholders.
 
+Link:  https://tpayinteractiveprototype.netlify.app/
+
 
 
 First its the Confiuration information where you will enter shared details provided from TPAY and details to be shown on disclaimer below input boxes
