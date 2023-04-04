@@ -2,7 +2,7 @@
 
 The project was part of my effort to enhance the product's presentation and interactivity for both merchants and commercial stakeholders.
 
-Link:  https://tpayinteractiveprototype.netlify.app/
+DEMO:  https://tpayinteractiveprototype.netlify.app/
 
 
 
